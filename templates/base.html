@@ -35,20 +35,20 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item {% block homeactive %}{% endblock %} ">
             <a class="nav-link" href="/"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item {% block aboutactive %}{% endblock %}">
             <a class="nav-link" href="/about">AboutUs</a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item {% block blogactive %}{% endblock %}">
             <a class="nav-link" href="/blog">Blog</a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item {% block contactactive %}{% endblock %}">
             <a class="nav-link" href="/contact">ContactUs</a>
           </li>
 
@@ -66,6 +66,16 @@
         </form>
       </div>
     </nav>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show" role="alert">
+        <strong>Message: </strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+    {% endif %}
 
     {% block body %}{% endblock body %}
     <!-- Optional JavaScript -->
