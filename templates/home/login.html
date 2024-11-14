@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+
+{% block title %}Search Results {% endblock title %}
+
+{% block body %}
+
+<div class="container my-3">
+
+    <form class="form-signin d-flex flex-column align-items-center" action="/login" method="post">
+        {% csrf_token %}
+        <!-- <img class="mb-4" src="/docs/4.2/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div class="form-group col-md-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="loginusername" id="loginusername" placeholder="Choose a unique username" required>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="pass1">Password</label>
+            <input type="password" class="form-control" name="loginpass" id="loginpass" placeholder="Password" required> 
+          </div>
+        <button class="btn btn-lg btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock body %}

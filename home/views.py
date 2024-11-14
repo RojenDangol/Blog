@@ -2,12 +2,16 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import Contact
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from blog.models import Post
 
 # Create your views here.
 def home(request):
     return render(request, 'home/home.html')
 
+
+@login_required(login_url='/login')
 def contact(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -73,4 +77,27 @@ def handleSignup(request):
         return redirect('/')
     else:
         return HttpResponse('404 - Page Not Found')
-    # return render(request, '')
+    
+
+def handleLogin(request):
+    if request.method == "POST":
+        loginUsername = request.POST['loginusername']
+        loginPassword = request.POST['loginpass']
+
+        user = authenticate(username=loginUsername, password=loginPassword)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully Logged In")
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid Credentials, Please try again.")
+            return redirect('home')
+    
+    return render(request, 'home/login.html')
+    # return HttpResponse('Login')
+
+
+def handleLogout(request):
+    logout(request)
+    messages.success(request, "Successfully Logged Out")
+    return redirect('home')
